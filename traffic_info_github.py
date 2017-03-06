@@ -5,7 +5,8 @@
 # of your github traffic, storing information about git clones and visitors
 # in a local TSV file and visualizing a summary overview, per repo.
 
-import os
+import os.path as op
+from os import makedirs
 import time
 import argparse
 import requests
@@ -78,17 +79,22 @@ def store_results(information, repo):
     timestamps = np.unique(np.hstack((tInfo[:, 0], cInfo[:, 0])))
 
     # Create result folder
-    if not os.path.exists('results'):
-        os.makedirs('results')
+    filepath = op.realpath(__file__)
+    path = op.dirname(filepath)
+
+    if not op.exists(op.join(path, 'results')):
+        makedirs(op.join(path, 'results'))
 
     # Create file if not exist
-    if not os.path.exists('results/traffic_info_%s.tsv' % repo):
+    outputfile = op.join(path, 'results', 'traffic_info_%s.tsv' % repo)
+
+    if not op.exists(outputfile):
         header = 'Date\tView_count\tView_unique\tClone_count\tClone_unique\n'
-        with open('results/traffic_info_%s.tsv' % repo, 'w') as f:
+        with open(outputfile, 'w') as f:
             f.write(header)
 
     # Find first overlap and start writing new content
-    with open('results/traffic_info_%s.tsv' % repo, 'a+') as f:
+    with open(outputfile, 'a+') as f:
 
         content = f.read()
         if timestamps[0] in content:
@@ -120,8 +126,13 @@ def plot_results(repo):
 
     sns.set_context("notebook", font_scale=1.5, rc={"lines.linewidth": 2})
 
+    # Create file if not exist
+    filepath = op.realpath(__file__)
+    path = op.dirname(filepath)
+    outputfile = op.join(path, 'results', 'traffic_info_%s.tsv' % repo)
+
     # Load repo results
-    df = pd.read_csv('results/traffic_info_%s.tsv' % repo,
+    df = pd.read_csv(op.join(path, 'results', 'traffic_info_%s.tsv' % repo),
                      sep='\t', index_col=0)
 
     # Create Figure
@@ -141,7 +152,7 @@ def plot_results(repo):
     ax[1].set_ylabel('Count')
 
     # Save Figure
-    fig.savefig('results/traffic_fig_%s.png' % repo, dpi=150)
+    fig.savefig(outputfile[:-4] + '.png', dpi=150)
 
 
 def main(username, pw, repo='ALL'):
