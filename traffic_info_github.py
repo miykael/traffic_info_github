@@ -121,7 +121,7 @@ def store_results(information, repo):
     return
 
 
-def plot_results(repo):
+def plot_results(username, repo):
     """Creates an summary figure for each repo results"""
 
     sns.set_context("notebook", font_scale=1.5, rc={"lines.linewidth": 2})
@@ -138,7 +138,7 @@ def plot_results(repo):
     # Create Figure
     fig, ax = plt.subplots(2, 1, figsize=(12, 6), dpi=150)
 
-    fig.suptitle('Repo: %s' % repo)
+    fig.suptitle('Repo: %s/%s' % (username, repo))
 
     df['View_count'].plot(ax=ax[0], color=sns.xkcd_rgb["denim blue"])
     df['View_unique'].plot(ax=ax[0], color=sns.xkcd_rgb["medium green"])
@@ -172,13 +172,13 @@ def main(username, pw, repo='ALL'):
         for repo in repos:
             info = get_information(auth_pair, repo)
             store_results(info, repo)
-            plot_results(repo)
+            plot_results(username, repo)
     else:
 
         # Get information of rep
         info = get_information(auth_pair, repo)
         store_results(info, repo)
-        plot_results(repo)
+        plot_results(username, repo)
 
     return
 
