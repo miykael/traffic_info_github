@@ -190,6 +190,10 @@ if __name__ == '__main__':
     parser.add_argument('pw', help='User\'s Github password')
     parser.add_argument('repo', help='User\'s Github repo',
                         default='ALL', nargs='?')
-
     args = parser.parse_args()
+
+    # Wait for 20min to make sure that local folder (e.g. Dropbox) is updated
+    time.sleep(60 * 20)
+
+    # Run main program
     main(args.username, args.pw, args.repo)
