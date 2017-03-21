@@ -4,7 +4,7 @@ The script ``traffic_info_github.py`` extracts the current traffic information o
 
 Once all new traffic information are collected, an overview graph for the whole tracking period will be generated for each repo:
 
-<img src="results/traffic_info_nipype_env.png">
+<img src="results/traffic_info_nipype_tutorial.png">
 
 **Note**: The script is based on [nchah's github-traffic-stats.py](https://github.com/nchah/github-traffic-stats), and I want to thank him for his work!
 
