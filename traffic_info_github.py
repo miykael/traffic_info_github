@@ -143,12 +143,13 @@ def plot_results(username, repo):
     df['View_count'].plot(ax=ax[0], color=sns.xkcd_rgb["denim blue"])
     df['View_unique'].plot(ax=ax[0], color=sns.xkcd_rgb["medium green"])
     ax[0].legend()
-    ax[0].set_xlabel('')
+    ax[0].set_xticklabels(df.index.tolist())
     ax[0].set_ylabel('Count')
 
     df['Clone_count'].plot(ax=ax[1], color=sns.xkcd_rgb["pale red"])
     df['Clone_unique'].plot(ax=ax[1], color=sns.xkcd_rgb["amber"])
     ax[1].legend()
+    ax[1].set_xticklabels(df.index.tolist())
     ax[1].set_ylabel('Count')
 
     # Save Figure
@@ -192,8 +193,8 @@ if __name__ == '__main__':
                         default='ALL', nargs='?')
     args = parser.parse_args()
 
-    # Wait for 20min to make sure that local folder (e.g. Dropbox) is updated
-    time.sleep(60 * 20)
+    # Wait for 15min to make sure that local folder (e.g. Dropbox) is updated
+    time.sleep(60 * 15)
 
     # Run main program
     main(args.username, args.pw, args.repo)
