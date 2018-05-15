@@ -94,7 +94,7 @@ def store_results(information, repo):
             f.write(header)
 
     # Find first overlap and start writing new content
-    with open(outputfile, 'a+') as f:
+    with open(outputfile, 'r+') as f:
 
         content = f.read()
         if timestamps[0] in content:
