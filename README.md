@@ -1,11 +1,11 @@
 # Github Traffic Information
 
-[![GitHub issues](https://img.shields.io/github/issues/miykael/xxxxxxxxxxxxxx.svg)](https://github.com/miykael/xxxxxxxxxxxxxx/issues/)
-[![GitHub pull-requests](https://img.shields.io/github/issues-pr/miykael/xxxxxxxxxxxxxx.svg)](https://github.com/miykael/xxxxxxxxxxxxxx/pulls/)
-[![GitHub contributors](https://img.shields.io/github/contributors/miykael/xxxxxxxxxxxxxx.svg)](https://GitHub.com/miykael/xxxxxxxxxxxxxx/graphs/contributors/)
-[![GitHub Commits](https://github-basic-badges.herokuapp.com/commits/miykael/xxxxxxxxxxxxxx.svg)](https://github.com/miykael/xxxxxxxxxxxxxx/commits/master)
-[![GitHub size](https://github-size-badge.herokuapp.com/miykael/xxxxxxxxxxxxxx.svg)](https://github.com/miykael/xxxxxxxxxxxxxx/archive/master.zip)
-[![GitHub HitCount](http://hits.dwyl.io/miykael/xxxxxxxxxxxxxx.svg)](http://hits.dwyl.io/miykael/xxxxxxxxxxxxxx)
+[![GitHub issues](https://img.shields.io/github/issues/miykael/traffic_info_github.svg)](https://github.com/miykael/traffic_info_github/issues/)
+[![GitHub pull-requests](https://img.shields.io/github/issues-pr/miykael/traffic_info_github.svg)](https://github.com/miykael/traffic_info_github/pulls/)
+[![GitHub contributors](https://img.shields.io/github/contributors/miykael/traffic_info_github.svg)](https://GitHub.com/miykael/traffic_info_github/graphs/contributors/)
+[![GitHub Commits](https://github-basic-badges.herokuapp.com/commits/miykael/traffic_info_github.svg)](https://github.com/miykael/traffic_info_github/commits/master)
+[![GitHub size](https://github-size-badge.herokuapp.com/miykael/traffic_info_github.svg)](https://github.com/miykael/traffic_info_github/archive/master.zip)
+[![GitHub HitCount](http://hits.dwyl.io/miykael/traffic_info_github.svg)](http://hits.dwyl.io/miykael/traffic_info_github)
 
 The script ``traffic_info_github.py`` extracts the current traffic information of a specific or all of your repos. Github only provides information about view and clone count for the last 14 days. This script tries to bypass this restrictuion by accumulating the traffic information in a local tsv file. Therefore, if you run the script at least once every 14 days you can store the full traffic information.
 
