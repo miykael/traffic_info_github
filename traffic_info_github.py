@@ -193,8 +193,8 @@ if __name__ == '__main__':
                         default='ALL', nargs='?')
     args = parser.parse_args()
 
-    # Wait for 15min to make sure that local folder (e.g. Dropbox) is updated
-    time.sleep(60 * 15)
+#     # Wait for 15min to make sure that local folder (e.g. Dropbox) is updated
+#     time.sleep(60 * 15)
 
     # Run main program
     main(args.username, args.pw, args.repo)
