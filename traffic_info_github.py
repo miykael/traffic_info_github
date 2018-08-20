@@ -3,7 +3,8 @@
 # This code is adapted from: https://github.com/nchah/github-traffic-stats
 # If run daily (or at least every 14 days), this code will create a backup
 # of your github traffic, storing information about git clones and visitors
-# in a local TSV file and visualizing a summary overview, per repo.
+# in a local TSV file. The creation of an overview visualization is optional
+# and can be done with 'visualize_github_traffic.py'.
 
 import os.path as op
 from os import makedirs
@@ -11,9 +12,6 @@ import time
 import argparse
 import requests
 import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
 
 
 def send_request(resource, auth, repo=None):
@@ -38,7 +36,19 @@ def send_request(resource, auth, repo=None):
         base_url = 'https://api.github.com/users/'
         base_url += auth[0] + '/repos'
         response = requests.get(base_url, auth=auth)
-        return response.json()
+        repo_names = [r['full_name'] for r in response.json()]
+
+        # GET /user/starred (contains some missing repos)
+        base_url = 'https://api.github.com/users/'
+        base_url += auth[0] + '/starred'
+        response = requests.get(base_url, auth=auth)
+        repo_names += [r['full_name'] for r in response.json()]
+
+        # Keep only personal repos
+        unique_repos = np.unique(repo_names)
+        repos = [r.split('/')[1] for r in unique_repos if auth[0] in r]
+
+        return repos
 
 
 def get_information(auth_pair, repo):
@@ -118,43 +128,6 @@ def store_results(information, repo):
                                         '\t'.join(cCounts))
             f.write(newline)
 
-    return
-
-
-def plot_results(username, repo):
-    """Creates an summary figure for each repo results"""
-
-    sns.set_context("notebook", font_scale=1.5, rc={"lines.linewidth": 2})
-
-    # Create file if not exist
-    filepath = op.realpath(__file__)
-    path = op.dirname(filepath)
-    outputfile = op.join(path, 'results', 'traffic_info_%s.tsv' % repo)
-
-    # Load repo results
-    df = pd.read_csv(op.join(path, 'results', 'traffic_info_%s.tsv' % repo),
-                     sep='\t', index_col=0)
-
-    # Create Figure
-    fig, ax = plt.subplots(2, 1, figsize=(12, 6), dpi=150)
-
-    fig.suptitle('Repo: %s/%s' % (username, repo))
-
-    df['View_count'].plot(ax=ax[0], color=sns.xkcd_rgb["denim blue"])
-    df['View_unique'].plot(ax=ax[0], color=sns.xkcd_rgb["medium green"])
-    ax[0].legend()
-    ax[0].set_xticklabels(df.index.tolist())
-    ax[0].set_ylabel('Count')
-
-    df['Clone_count'].plot(ax=ax[1], color=sns.xkcd_rgb["pale red"])
-    df['Clone_unique'].plot(ax=ax[1], color=sns.xkcd_rgb["amber"])
-    ax[1].legend()
-    ax[1].set_xticklabels(df.index.tolist())
-    ax[1].set_ylabel('Count')
-
-    # Save Figure
-    fig.savefig(outputfile[:-4] + '.png', dpi=150)
-
 
 def main(username, pw, repo='ALL'):
     """Executes the script either for ALL or a specified repo"""
@@ -162,26 +135,18 @@ def main(username, pw, repo='ALL'):
     auth_pair = (username, pw)
 
     if repo == 'ALL':
-        repos_response = send_request('repos', auth_pair)
-
-        # Get list of repos
-        repos = []
-        for repo in repos_response:
-            repos.append(repo['name'])
+        # Get list of all repos
+        repos = send_request('repos', auth_pair)
 
         # Get information of each repo
-        for repo in repos:
-            info = get_information(auth_pair, repo)
-            store_results(info, repo)
-            plot_results(username, repo)
+        for repo_name in repos:
+            info = get_information(auth_pair, repo_name)
+            store_results(info, repo_name)
     else:
 
         # Get information of rep
         info = get_information(auth_pair, repo)
         store_results(info, repo)
-        plot_results(username, repo)
-
-    return
 
 
 if __name__ == '__main__':
@@ -192,9 +157,6 @@ if __name__ == '__main__':
     parser.add_argument('repo', help='User\'s Github repo',
                         default='ALL', nargs='?')
     args = parser.parse_args()
-
-#     # Wait for 15min to make sure that local folder (e.g. Dropbox) is updated
-#     time.sleep(60 * 15)
 
     # Run main program
     main(args.username, args.pw, args.repo)
