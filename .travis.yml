@@ -1,0 +1,22 @@
+language: python
+sudo: false
+
+python:
+    - 3.6
+
+before_install:
+    - python -m pip install --upgrade pip
+
+install:
+    - pip install numpy pandas seaborn matplotlib requests
+
+before_script:
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3
+
+script:
+    - python traffic_info_github.py ${USERNAME} ${TOKEN} ${REPO}
+
+after_success:
+    - bash push.sh
