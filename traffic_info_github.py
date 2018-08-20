@@ -139,6 +139,7 @@ def main(username, pw, repo='ALL'):
         repos = send_request('repos', auth_pair)
 
         # Get information of each repo
+        print(repos)
         for repo_name in repos:
             info = get_information(auth_pair, repo_name)
             store_results(info, repo_name)
