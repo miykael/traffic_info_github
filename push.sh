@@ -12,7 +12,7 @@ commit_new_results() {
 }
 
 upload_files() {
-    git remote add travis https://${TOKEN}@github.com/${USERNAME}/traffic_info_github.git > /dev/null 2>&1
+    git remote add travis https://${TOKEN}@github.com/miykael/traffic_info_github.git > /dev/null 2>&1
     git push --quiet --set-upstream travis ${TRAVIS_BRANCH} > /dev/null 2>&1
 }
 
