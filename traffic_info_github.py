@@ -36,7 +36,6 @@ def send_request(resource, auth, repo=None):
         base_url = 'https://api.github.com/users/'
         base_url += auth[0] + '/repos'
         response = requests.get(base_url, auth=auth)
-        print(response.json())
         repo_names = [r['full_name'] for r in response.json()]
 
         # GET /user/starred (contains some missing repos)
@@ -140,7 +139,6 @@ def main(username, pw, repo='ALL'):
         repos = send_request('repos', auth_pair)
 
         # Get information of each repo
-        print(repos)
         for repo_name in repos:
             info = get_information(auth_pair, repo_name)
             store_results(info, repo_name)
