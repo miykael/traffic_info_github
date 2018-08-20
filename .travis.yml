@@ -16,7 +16,7 @@ before_script:
     - sleep 3
 
 script:
-    - python traffic_info_github.py ${USERNAME} ${TOKEN} ${REPO}
+    - python traffic_info_github.py miykael ${TOKEN} nipype_tutorial
 
 after_success:
     - bash push.sh
