@@ -33,10 +33,8 @@ If you want to only track one specific repo use:
     python traffic_info_github.py username password reponame
 
 
-# Set up daily collection
+# Set up weekly collection
 
-I'm not really familiar with all the ways to run this script daily, or at least every 14 days. I'm sure there's a cool fancy way to run it somehow "online" on a server/cloud. If you know how, please tell me. I'm happy to learn it, too.
+The script is setup on TravisCI in such a way, that it's run every week. The collected data is directly pushed to this repo.
 
-My solution was to run the script at system boot up on my local Ubunut machine. To do so, open `Startup Applications` and create a new entry (`Add`) with the following command:
-
-    /path/to/your/python/bin/ipython /path/to/script/traffic_info_github.py username password
+To visualize the results, you can use the `visualize_github_traffic.py` script, that is still under development.
