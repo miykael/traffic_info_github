@@ -5,7 +5,6 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/miykael/traffic_info_github.svg)](https://GitHub.com/miykael/traffic_info_github/graphs/contributors/)
 [![GitHub Commits](https://github-basic-badges.herokuapp.com/commits/miykael/traffic_info_github.svg)](https://github.com/miykael/traffic_info_github/commits/master)
 [![GitHub size](https://github-size-badge.herokuapp.com/miykael/traffic_info_github.svg)](https://github.com/miykael/traffic_info_github/archive/master.zip)
-[![GitHub HitCount](http://hits.dwyl.io/miykael/traffic_info_github.svg)](http://hits.dwyl.io/miykael/traffic_info_github)
 
 The script ``traffic_info_github.py`` extracts the current traffic information of a specific or all of your repos. Github only provides information about view and clone count for the last 14 days. This script tries to bypass this restrictuion by accumulating the traffic information in a local tsv file. Therefore, if you run the script at least once every 14 days you can store the full traffic information.
 
